@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: feign-app
+
+server:
+  port: 0
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+
+greeting-feign:
+  ribbon:
+    #listOfServers: localhost:7080
+    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
+    # the eureka vipAddress of the target service
+    DeploymentContextBasedVipAddresses: web-flux-app
+    # Interval to refresh the server list from the source
+    ServerListRefreshInterval: 1000
