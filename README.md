@@ -2,4 +2,6 @@
 
 Sample of reactive feign in cloud mode
 
-1. Start EurekaApplication 
+1. start EurekaApplication 
+2. start WebFluxApplication
+3. start FeignApplication
