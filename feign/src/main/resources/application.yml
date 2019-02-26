@@ -12,11 +12,7 @@ eureka:
   instance:
     preferIpAddress: true
 
-greeting-feign:
+greeting-other:
   ribbon:
-    #listOfServers: localhost:7080
-    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
     # the eureka vipAddress of the target service
     DeploymentContextBasedVipAddresses: web-flux-app
-    # Interval to refresh the server list from the source
-    ServerListRefreshInterval: 1000

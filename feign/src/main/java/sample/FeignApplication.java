@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactivefeign.spring.config.EnableReactiveFeignClients;
 import reactor.core.publisher.Mono;
@@ -13,10 +15,20 @@ import reactor.core.publisher.Mono;
 @EnableEurekaClient
 @RestController
 @EnableReactiveFeignClients
-public class FeignApplication implements Greeting {
+@EnableFeignClients
+public class FeignApplication {
+
+    @Autowired
+    private GreetingReactive reactiveFeignClient;
+
+    @Autowired
+    private GreetingReactiveWOtherName reactiveFeignClientOther;
 
     @Autowired
     private Greeting feignClient;
+
+    @Autowired
+    private GreetingWOtherName feignClient2;
 
     @Value("${spring.application.name}")
     private String appName;
@@ -25,9 +37,24 @@ public class FeignApplication implements Greeting {
         SpringApplication.run(FeignApplication.class, args);
     }
 
-    @Override
-    public Mono<String> greeting() {
-        return feignClient.greeting().map(s -> "reactive feign! : " + s);
+    @GetMapping("/greetingReactive")
+    public Mono<String> greetingReactive() {
+        return reactiveFeignClient.greeting().map(s -> "reactive feign! : " + s);
+    }
+
+    @GetMapping("/greetingReactiveOther")
+    public Mono<String> greetingReactiveOther() {
+        return reactiveFeignClientOther.greeting().map(s -> "reactive feign other! : " + s);
+    }
+
+    @GetMapping("/greeting")
+    public String greeting() {
+        return "feign! : " + feignClient.greeting();
+    }
+
+    @GetMapping("/greetingOther")
+    public String greetingOther() {
+        return "feign other! : " + feignClient2.greeting();
     }
 
 }
