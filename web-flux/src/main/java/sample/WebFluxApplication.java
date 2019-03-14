@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
@@ -31,5 +32,11 @@ public class WebFluxApplication {
     public Mono<String> greeting() {
         String idInEureka = eurekaClient.getApplication(appName).getInstances().get(0).getId();
         return Mono.just(String.format("Hello from '%s'!", idInEureka));
+    }
+
+    @GetMapping("/greetingWithParam")
+    public Mono<String> greetingWithParam(@RequestParam(value = "id") Long id) {
+        String idInEureka = eurekaClient.getApplication(appName).getInstances().get(0).getId();
+        return Mono.just(String.format("Hello with param from '%s'!", idInEureka));
     }
 }

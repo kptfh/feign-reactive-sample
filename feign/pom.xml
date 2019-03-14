@@ -12,7 +12,7 @@
     <artifactId>feign</artifactId>
 
     <properties>
-        <feign-reactor.version>1.0.20</feign-reactor.version>
+        <feign-reactor.version>1.0.22</feign-reactor.version>
     </properties>
 
     <dependencies>
