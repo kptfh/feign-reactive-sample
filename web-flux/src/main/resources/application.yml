@@ -3,7 +3,7 @@ spring:
     name: web-flux-app
 
 server:
-  port: 0
+  port: 8874
 
 eureka:
   client:
