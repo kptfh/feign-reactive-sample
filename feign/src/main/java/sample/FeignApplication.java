@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancerAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +26,10 @@ public class FeignApplication {
     private GreetingReactiveWOtherName reactiveFeignClientOther;
 
     @Autowired
+    private GreetingReactiveWithUrl reactiveFeignClientWithUrl;
+
+
+    @Autowired
     private Greeting feignClient;
 
     @Autowired
@@ -47,6 +50,11 @@ public class FeignApplication {
     @GetMapping("/greetingReactiveWithParam")
     public Mono<String> greetingReactiveWithParam(@RequestParam(value = "id") Long id) {
         return reactiveFeignClient.greetingWithParam(id).map(s -> "reactive feign with param! : " + s);
+    }
+
+    @GetMapping("/greetingReactiveWithUrl")
+    public Mono<String> greetingReactiveWithUrl() {
+        return reactiveFeignClientWithUrl.greeting().map(s -> "reactive feign with url! : " + s);
     }
 
     @GetMapping("/greetingReactiveOther")
