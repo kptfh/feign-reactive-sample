@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactivefeign.spring.config.EnableReactiveFeignClients;
 import reactor.core.publisher.Mono;
 
-@SpringBootApplication(exclude = ReactiveLoadBalancerAutoConfiguration.class)
+@SpringBootApplication
 @EnableEurekaClient
 @RestController
 @EnableReactiveFeignClients
