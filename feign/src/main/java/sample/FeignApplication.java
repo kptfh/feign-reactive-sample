@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactivefeign.spring.config.EnableReactiveFeignClients;
@@ -50,6 +51,11 @@ public class FeignApplication {
     @GetMapping("/greetingReactiveWithParam")
     public Mono<String> greetingReactiveWithParam(@RequestParam(value = "id") Long id) {
         return reactiveFeignClient.greetingWithParam(id).map(s -> "reactive feign with param! : " + s);
+    }
+
+    @GetMapping("/greetingReactiveWithPath/{id}")
+    public Mono<String> greetingReactiveWithPath(@PathVariable(value = "id") Long id) {
+        return reactiveFeignClient.greetingWithPath(id).map(s -> "reactive feign with path! : " + s);
     }
 
     @GetMapping("/greetingReactiveWithUrl")

@@ -1,6 +1,7 @@
 package sample;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import reactivefeign.spring.config.ReactiveFeignClient;
 import reactor.core.publisher.Mono;
@@ -14,4 +15,7 @@ public interface GreetingReactive {
 
     @GetMapping("/greetingWithParam")
     Mono<String> greetingWithParam(@RequestParam(value = "id") Long id);
+
+    @GetMapping("/greetingWithPath/{id}")
+    Mono<String> greetingWithPath(@PathVariable(value = "id") Long id);
 }
