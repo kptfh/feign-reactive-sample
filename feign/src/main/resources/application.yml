@@ -12,7 +12,12 @@ eureka:
   instance:
     preferIpAddress: true
 
+#temporary workaround due to issue https://github.com/spring-cloud/spring-cloud-commons/issues/951
 greeting-other:
-  ribbon:
-    # the eureka vipAddress of the target service
-    DeploymentContextBasedVipAddresses: web-flux-app
+  service:
+    name: web-flux-app
+
+#greeting-other:
+#  ribbon:
+#    # the eureka vipAddress of the target service
+#    DeploymentContextBasedVipAddresses: web-flux-app
