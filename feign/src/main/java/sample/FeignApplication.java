@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactivefeign.spring.config.EnableReactiveFeignClients;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -63,13 +64,15 @@ public class FeignApplication {
     }
 
     @GetMapping("/greeting")
-    public String greeting() {
-        return "feign! : " + feignClient.greeting();
+    public Mono<String> greeting() {
+        return Mono.fromCallable(() -> "feign! : " + feignClient.greeting())
+                .subscribeOn(Schedulers.boundedElastic());
     }
 
     @GetMapping("/greetingOther")
-    public String greetingOther() {
-        return "feign other! : " + feignClient2.greeting();
+    public Mono<String> greetingOther() {
+        return Mono.fromCallable(() -> "feign! : " + feignClient2.greeting())
+                .subscribeOn(Schedulers.boundedElastic());
     }
 
 }
